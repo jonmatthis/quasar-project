@@ -1,9 +1,8 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import os from 'os';
 
 // needed in case process is undefined under Linux
-const platform = process.platform || os.platform();
+// const cdplatform = process.platform || os.platform();
 
 let mainWindow: BrowserWindow | undefined;
 
@@ -19,8 +18,8 @@ function createWindow() {
     webPreferences: {
       contextIsolation: true,
       // More info: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/electron-preload-script
-      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
-    },
+      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD)
+    }
   });
 
   mainWindow.loadURL(process.env.APP_URL);
@@ -43,9 +42,7 @@ function createWindow() {
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
-  if (platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on('activate', () => {
